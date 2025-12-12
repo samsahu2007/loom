@@ -1,4 +1,6 @@
 from enum import Enum
+import enum
+from typing import List, Text
 
 from htmlnode import HTMLNode
 from leafnode import LeafNode
@@ -59,3 +61,23 @@ def text_node_to_html_node(text_node: TextNode) -> HTMLNode:
         )
     else:
         raise ValueError("Missed this testcase, please fix", text_node.__repr__())
+
+
+def split_nodes_delimiter(
+    old_nodes: List[TextNode], delimiter: str, text_type: TextType
+):
+    new_nodes: List[TextNode] = []
+    for old_node in old_nodes:
+        if old_node.node_type != TextType.PLAIN:
+            new_nodes.append(old_node)
+            continue
+        parts = old_node.text.split(delimiter, 2)
+        if len(parts) == 2:
+            # It means no closing delimiter
+            raise ValueError(f"Could Not find closing delimiter for {old_node}")
+        for idx, part in enumerate(parts):
+            if not idx & 1:
+                new_nodes.append(TextNode(part, TextType.PLAIN))
+            else:
+                new_nodes.append(TextNode(part, text_type))
+    return new_nodes
