@@ -1,5 +1,4 @@
 from enum import Enum
-from typing import List
 
 from htmlnode import HTMLNode
 from leafnode import LeafNode
