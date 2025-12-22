@@ -20,6 +20,7 @@ class BlockType(Enum):
 
 
 def markdown_to_blocks(markdown: str) -> List[str]:
+    markdown = markdown.replace("\r\n", "\n").replace("\r", "\n")
     blocks = markdown.split("\n\n")
     blocks = [block.strip() for block in blocks if block.strip()]
     return blocks
