@@ -452,6 +452,21 @@ class TestTextToTextNodes(unittest.TestCase):
         nodes = text_to_textnodes(text)
         self.assertListEqual([TextNode("This is italic", TextType.ITALIC)], nodes)
 
+    def test_only_italic_with_no_whitespace(self):
+        """Checks for flanking whitespace before '_' for rendering italic font. 
+        Otherwise commonmark spec specifies it as plain text"""
+        # test added by samsahu2007
+        text = "my_variable_name"
+        nodes = text_to_textnodes(text)
+        self.assertListEqual([TextNode("my_variable_name", TextType.PLAIN)], nodes)
+
+    def test_only_italic_with_asterik(self):
+        """text with single asterik before and after is also treated as italics"""
+        # test added by samsahu2007
+        text="*italic word*"
+        nodes = text_to_textnodes(text)
+        self.assertListEqual([TextNode("italic word", TextType.ITALIC)], nodes)
+
     def test_only_code(self):
         text = "`This is code`"
         nodes = text_to_textnodes(text)
