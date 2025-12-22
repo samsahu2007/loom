@@ -78,6 +78,14 @@ This is the same paragraph on a new line
         self.assertEqual(block_to_block_type("#### Heading 4"), BlockType.HEADING)
         self.assertEqual(block_to_block_type("##### Heading 5"), BlockType.HEADING)
         self.assertEqual(block_to_block_type("###### Heading 6"), BlockType.HEADING)
+        self.assertEqual(block_to_block_type("## Heading 2 ##"), BlockType.HEADING)
+        
+        self.assertEqual(block_to_block_type("# "), BlockType.HEADING)
+        self.assertEqual(block_to_block_type("   # H1"), BlockType.HEADING)
+        self.assertEqual(
+            block_to_block_type("    # H1"), BlockType.PARAGRAPH
+        )  #Up to 3 leading spaces allowed
+
         self.assertEqual(
             block_to_block_type(" #Not a heading"), BlockType.PARAGRAPH
         )  # leading space
@@ -98,9 +106,9 @@ This is the same paragraph on a new line
         )
         self.assertEqual(block_to_block_type("```  \nsome code\n  ```"), BlockType.CODE)
         self.assertEqual(block_to_block_type("```code block\n\n```"), BlockType.CODE)
-        self.assertEqual(
-            block_to_block_type("```\n```"), BlockType.CODE
-        )  # Empty code block
+        self.assertEqual(block_to_block_type("```\n```"), BlockType.CODE)  
+        self.assertEqual(block_to_block_type("``````"), BlockType.CODE) 
+        # Empty code block
         # Changed this test to reflect the actual behavior of the provided regex
         self.assertEqual(
             block_to_block_type("```python\nprint('hi')\n```"), BlockType.CODE
@@ -116,15 +124,17 @@ This is the same paragraph on a new line
         self.assertEqual(block_to_block_type(">  indented quote"), BlockType.QUOTE)
 
         ## These tests are based on the assignment, which expects these to be QUOTE
-        ## The provided block.py code currently classifies ">" and ">\n> " as PARAGRAPH
-
+        
         # Test the valid but unconventional cases(i.e. edge cases)
         self.assertEqual(
             block_to_block_type("> "), BlockType.QUOTE
         )  # Single empty quote line
         self.assertEqual(
             block_to_block_type("> \n> "), BlockType.QUOTE
-        )  # Empty quote lines
+        )  # Empty quote lines        
+        self.assertEqual(
+            block_to_block_type("   > Quote"), BlockType.QUOTE
+        )  # Up to 3 leading spaces allowed -- added by samsahu2007
 
         # Test against the wrong cases
         self.assertEqual(
@@ -133,6 +143,9 @@ This is the same paragraph on a new line
         self.assertEqual(
             block_to_block_type("This is not > a quote"), BlockType.PARAGRAPH
         )
+        self.assertEqual(
+            block_to_block_type("     > Quote"), BlockType.PARAGRAPH
+        )  # More than 3 leading spaces not allowed -- added by samsahu2007 
 
     def test_block_to_block_type_unordered_list(self):
 
@@ -157,11 +170,14 @@ This is the same paragraph on a new line
             block_to_block_type("- \n- "), BlockType.UNORDERED_LIST
         )  # Empty list items
 
-        # Test against the wrong cases(for robustness)
+        # Test against the wrong cases
         self.assertEqual(
             block_to_block_type("- Item 1\nItem 2"), BlockType.PARAGRAPH
         )  # Missing '-' on one line
         self.assertEqual(block_to_block_type("Not - a list item"), BlockType.PARAGRAPH)
+        self.assertEqual(
+            block_to_block_type("-Item"), BlockType.PARAGRAPH
+        )  # Missing space between '-' and Item
 
     def test_block_to_block_type_ordered_list(self):
 
@@ -174,7 +190,7 @@ This is the same paragraph on a new line
             block_to_block_type("1. Item 1\n2. Item 2\n3. Item 3"),
             BlockType.ORDERED_LIST,)
         
-        # Test the valid cases but unconventional(i.e. edge cases)
+        # Test the valid but unconventional cases(i.e. edge cases)
         self.assertEqual(
             block_to_block_type("1. Item 1\n3. Item 2"), BlockType.ORDERED_LIST
         )  # Non-sequential numbers but is still valid ordered list
@@ -185,7 +201,7 @@ This is the same paragraph on a new line
             block_to_block_type("1. Item 1\n1. Item 2"), BlockType.ORDERED_LIST
         )  # Repeated number but still valid ordered list
 
-        # Test against the wrong cases(for robustness)
+        # Test against the wrong cases
         self.assertEqual(
             block_to_block_type("1. Item 1\n2.Item 2"), BlockType.PARAGRAPH
         )  # Missing space after '.'
