@@ -2,12 +2,12 @@ import unittest
 
 from parentnode import ParentNode
 from leafnode import LeafNode
+from htmlnode import HTMLNode
 
 class TestParentNode(unittest.TestCase):
 
     def test_parent_node_inherits_from_htmlnode(self):
         """ParentNode should inherit from HTMLNode"""
-        from htmlnode import HTMLNode
         node = ParentNode("div", [LeafNode("p", "text")])
         self.assertIsInstance(node, HTMLNode)
 

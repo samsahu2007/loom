@@ -1,4 +1,4 @@
-.FF..F.....................................................E...FF.FF.....FF...............................F....F............F.
+.FF..F...............F.....................................FE...F.FF.....FF............................E....F....F............F.
 ======================================================================
 ERROR: test_code_span_with_backtick_inside (test_inline.TestTextToTextNodes.test_code_span_with_backtick_inside)
 Code span containing backtick uses double backticks
@@ -11,6 +11,28 @@ Traceback (most recent call last):
   File "/home/samriddha/Winter_Opensource/static_site_generator/src/inline.py", line 18, in split_nodes_delimiter
     raise ValueError(f"Could Not find closing delimiter for {old_node}")
 ValueError: Could Not find closing delimiter for TextNode(Use ``code with ` backtick``, PLAIN, None)
+
+======================================================================
+ERROR: test_escape_pipe_using_backtick (test_table.TestTableParsing.test_escape_pipe_using_backtick)
+Include a pipe in a cell's content by escaping it, including inside other inline spans
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/samriddha/Winter_Opensource/static_site_generator/src/test_table.py", line 219, in test_escape_pipe_using_backtick
+    table = get_table(md)
+  File "/home/samriddha/Winter_Opensource/static_site_generator/src/test_table.py", line 29, in get_table
+    root = markdown_to_html_node(md)
+  File "/home/samriddha/Winter_Opensource/static_site_generator/src/block.py", line 251, in markdown_to_html_node
+    html_node = get_block_html_node(block)
+  File "/home/samriddha/Winter_Opensource/static_site_generator/src/block.py", line 225, in get_block_html_node
+    return parse_table_block(markdown_block)
+  File "/home/samriddha/Winter_Opensource/static_site_generator/src/block.py", line 137, in parse_table_block
+    for n in text_to_textnodes(cell):
+             ~~~~~~~~~~~~~~~~~^^^^^^
+  File "/home/samriddha/Winter_Opensource/static_site_generator/src/inline.py", line 87, in text_to_textnodes
+    nodes = split_nodes_delimiter(nodes, "`", TextType.CODE)
+  File "/home/samriddha/Winter_Opensource/static_site_generator/src/inline.py", line 18, in split_nodes_delimiter
+    raise ValueError(f"Could Not find closing delimiter for {old_node}")
+ValueError: Could Not find closing delimiter for TextNode(b `\, PLAIN, None)
 
 ======================================================================
 FAIL: test_block_to_block_type_heading (test_block.TestBlockFunctions.test_block_to_block_type_heading)
@@ -48,22 +70,35 @@ Traceback (most recent call last):
 AssertionError: <BlockType.UNORDERED_LIST: 'UNORDERED_LIST'> != <BlockType.PARAGRAPH: 'PARAGRAPH'>
 
 ======================================================================
-FAIL: test_escaped_italics (test_inline.TestTextToTextNodes.test_escaped_italics)
+FAIL: test_props_with_quotes_in_value (test_htmlnode.TestHTMLNode.test_props_with_quotes_in_value)
+Props with quotes in values
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/samriddha/Winter_Opensource/static_site_generator/src/test_htmlnode.py", line 20, in test_props_with_quotes_in_value
+    self.assertEqual(node.props_to_html(), ' "Say &quot;hello&quot;"')
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ' title="Say "hello""' != ' "Say &quot;hello&quot;"'
+-  title="Say "hello""
++  "Say &quot;hello&quot;"
+
+
+======================================================================
+FAIL: test_backslash_escapes_italics (test_inline.TestTextToTextNodes.test_backslash_escapes_italics)
 Backslash escapes italics markers
 ----------------------------------------------------------------------
 Traceback (most recent call last):
-  File "/home/samriddha/Winter_Opensource/static_site_generator/src/test_inline.py", line 484, in test_escaped_italics
-    self.assertListEqual([TextNode("This is *not italized*", TextType.PLAIN)], nodes)
-    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-AssertionError: Lists differ: [TextNode(This is *not italized*, PLAIN, None)] != [TextNode(This is \*not italized\*, PLAIN, None)]
+  File "/home/samriddha/Winter_Opensource/static_site_generator/src/test_inline.py", line 484, in test_backslash_escapes_italics
+    self.assertListEqual([TextNode("This is *not italicized*", TextType.PLAIN)], nodes)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [TextNode(This is *not italicized*, PLAIN, None)] != [TextNode(This is \*not italicized\*, PLAIN, None)]
 
 First differing element 0:
-TextNode(This is *not italized*, PLAIN, None)
-TextNode(This is \*not italized\*, PLAIN, None)
+TextNode(This is *not italicized*, PLAIN, None)
+TextNode(This is \*not italicized\*, PLAIN, None)
 
-- [TextNode(This is *not italized*, PLAIN, None)]
-+ [TextNode(This is \*not italized\*, PLAIN, None)]
-?                   +             +
+- [TextNode(This is *not italicized*, PLAIN, None)]
++ [TextNode(This is \*not italicized\*, PLAIN, None)]
+?                   +               +
 
 
 ======================================================================
@@ -100,11 +135,11 @@ AssertionError: 'url(with' != 'url(with)parens'
 
 
 ======================================================================
-FAIL: test_only_italic_with_asterik (test_inline.TestTextToTextNodes.test_only_italic_with_asterik)
-Text with single asterik before and after is also treated as italics
+FAIL: test_only_italic_with_asterisk (test_inline.TestTextToTextNodes.test_only_italic_with_asterisk)
+Text with single asterisk before and after is also treated as italics
 ----------------------------------------------------------------------
 Traceback (most recent call last):
-  File "/home/samriddha/Winter_Opensource/static_site_generator/src/test_inline.py", line 468, in test_only_italic_with_asterik
+  File "/home/samriddha/Winter_Opensource/static_site_generator/src/test_inline.py", line 468, in test_only_italic_with_asterisk
     self.assertListEqual([TextNode("italic word", TextType.ITALIC)], nodes)
     ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 AssertionError: Lists differ: [TextNode(italic word, ITALIC, None)] != [TextNode(*italic word*, PLAIN, None)]
@@ -205,6 +240,6 @@ Traceback (most recent call last):
 AssertionError: ValueError not raised
 
 ----------------------------------------------------------------------
-Ran 126 tests in 0.005s
+Ran 128 tests in 0.006s
 
-FAILED (failures=12, errors=1)
+FAILED (failures=13, errors=2)

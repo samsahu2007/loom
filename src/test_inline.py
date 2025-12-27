@@ -460,8 +460,8 @@ class TestTextToTextNodes(unittest.TestCase):
         nodes = text_to_textnodes(text)
         self.assertListEqual([TextNode("my_variable_name", TextType.PLAIN)], nodes)
 
-    def test_only_italic_with_asterik(self):
-        """Text with single asterik before and after is also treated as italics"""
+    def test_only_italic_with_asterisk(self):
+        """Text with single asterisk before and after is also treated as italics"""
            
         text="*italic word*"
         nodes = text_to_textnodes(text)
@@ -477,11 +477,11 @@ class TestTextToTextNodes(unittest.TestCase):
     def test_backslash_escapes_italics(self):
         """Backslash escapes italics markers"""
            
-        text = r"This is \*not italized\*"
+        text = r"This is \*not italicized\*"
         # The 'r' before "This is \*not emphasized\*" tells python that the backslash '\'
         # is not an escape sequence
         nodes = text_to_textnodes(text)
-        self.assertListEqual([TextNode("This is *not italized*", TextType.PLAIN)], nodes)
+        self.assertListEqual([TextNode("This is *not italicized*", TextType.PLAIN)], nodes)
         # Should remain plain with literal asterisks
 
     def test_only_code(self):

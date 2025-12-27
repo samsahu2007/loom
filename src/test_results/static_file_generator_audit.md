@@ -67,7 +67,7 @@ In `test_link_no_url(self)`, the assertion was corrected to allow empty URLs wit
 
 ### 1.3 Changes in `test_table.py`
 
-Changed the testing method by comparing using Abstract Syntax Tree method rather than comparing whole html string.
+Changed the testing method by comparing using Abstract Syntax Tree method rather than comparing whole html string for cleaner code.
 
 ---
 
@@ -163,29 +163,31 @@ self.assertEqual(block_to_block_type("-Item"), BlockType.PARAGRAPH)
 
 The complete test suite was executed against the reference implementation.
 
-- **Total Tests:** 126  
-- **Failures:** 12  
-- **Errors:** 1  
+- **Total Tests:** 128  
+- **Failures:** 13  
+- **Errors:** 2
 - **Execution Time:** 0.006 seconds  
 
 ### 3.1 Error Encountered
 
 - `test_code_span_with_backtick_inside` (`test_inline.py`)
+- `test_escape_pipe_using_backtick` (`test_table.py`)
 
 ### 3.2 Failed Tests
 
-- `test_block_to_block_type_heading`
-- `test_block_to_block_type_ordered_list`
-- `test_block_to_block_type_unordered_list`
-- `test_escaped_italics`
-- `test_image_with_empty_alt`
-- `test_link_with_empty_url`
-- `test_link_with_parentheses_in_url`
-- `test_only_italic_with_asterik`
-- `test_only_italic_with_no_flanking_whitespace`
-- `test_table_mismatched_cells_with_alignment`
-- `test_table_with_more_body_cells`
-- `test_link_no_url`
+- `test_block_to_block_type_heading` (`test_block.py`)
+- `test_block_to_block_type_ordered_list` (`test_block.py`)
+- `test_block_to_block_type_unordered_list` (`test_block.py`)
+- `test_backslash_escapes_italics` (`test_inline.py`) 
+- `test_props_with_quotes_in_value` (`test_htmlnode.py`)
+- `test_image_with_empty_alt` (`test_inline.py`)
+- `test_link_with_empty_url` (`test_inline.py`)
+- `test_link_with_parentheses_in_url` (`test_inline.py`)
+- `test_only_italic_with_asterisk` (`test_inline.py`)
+- `test_only_italic_with_no_flanking_whitespace` (`test_inline.py`)
+- `test_table_mismatched_cells_with_alignment` (`test_table.py`)
+- `test_table_with_more_body_cells` (`test_table.py`)
+- `test_link_no_url` (`test_textnode.py`)
 
 Detailed failure logs are available in `test_outcome.txt` or `test_log_screenshot.pdf`. 
 
@@ -209,6 +211,7 @@ Based on the failed tests, the following code changes are required:
   - empty image alt text
   - parentheses inside URLs
 - Add **backslash escape handling** for inline formatting
+- Escape double quotes in HTML attribute values (" → &quot;) within props_to_html() to ensure valid HTML output.
 - Support **double-backtick code spans**
 - Ensure GFM compliance with regard to tables
   - extra cells in `<tbody>` should not be rendered

@@ -200,7 +200,7 @@ class TestTableParsing(unittest.TestCase):
             ["L2", "C2", "R2"],
         )
 
-    def header_row_delimeter_row_mismatch(self):
+    def test_header_row_delimeter_row_mismatch(self):
         """The header row must match the delimiter row in the number of cells. If not, a table will not be recognized"""
         md = """
 |  A  |  B  |
@@ -209,12 +209,12 @@ class TestTableParsing(unittest.TestCase):
 """
         self.assertEqual(block_to_block_type(md), BlockType.PARAGRAPH)
 
-    def escape_pipe_using_backtick(self):
+    def test_escape_pipe_using_backtick(self):
         """Include a pipe in a cell's content by escaping it, including inside other inline spans"""
         md = """
 |  A  |
 | --- |
-| b `\\|` az |
+| b `\|` az |
 """
         table = get_table(md)
         tbody = find_child(table, "tbody")
