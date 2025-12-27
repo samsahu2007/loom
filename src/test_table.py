@@ -103,9 +103,9 @@ class TestTableParsing(unittest.TestCase):
 | L2   | C2     | R2    |
 """
         table = get_table(md)
-        ths = element_children(find_child(table, "tbody").children[1])
+        tds = element_children(find_child(table, "tbody").children[1])
 
-        aligns = [(th.props or {}).get("align") for th in ths]
+        aligns = [(td.props or {}).get("align") for td in tds]
         self.assertEqual(aligns, [None, "center", "right"])
 
     def test_table_with_varying_separator_lengths(self):
@@ -115,9 +115,9 @@ class TestTableParsing(unittest.TestCase):
 | a1  |   b1  | c1  |
 """
         table = get_table(md)
-        ths = element_children(find_child(table, "thead").children[0])
+        tds = element_children(find_child(table, "tbody").children[0])
 
-        aligns = [(th.props or {}).get("align") for th in ths]
+        aligns = [(td.props or {}).get("align") for td in tds]
         self.assertEqual(aligns, [None, "center", "right"])
         
     def test_table_alignment_with_empty_cells(self):

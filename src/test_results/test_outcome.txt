@@ -240,6 +240,6 @@ Traceback (most recent call last):
 AssertionError: ValueError not raised
 
 ----------------------------------------------------------------------
-Ran 128 tests in 0.006s
+Ran 128 tests in 0.005s
 
 FAILED (failures=13, errors=2)

@@ -152,8 +152,8 @@ self.assertEqual(block_to_block_type("-Item"), BlockType.PARAGRAPH)
 - `test_props_with_style_attribute(self)`
 
 ### 2.7 Table Tests (test_table.py)
-- `header_row_delimeter_row_mismatch`
-- `escape_pipe_using_backtick`
+- `test_header_row_delimiter_row_mismatch`
+- `test_escape_pipe_using_backtick`
 
 <div style="page-break-after: always;"></div>
 
@@ -166,7 +166,7 @@ The complete test suite was executed against the reference implementation.
 - **Total Tests:** 128  
 - **Failures:** 13  
 - **Errors:** 2
-- **Execution Time:** 0.006 seconds  
+- **Execution Time:** 0.005 seconds  
 
 ### 3.1 Error Encountered
 
