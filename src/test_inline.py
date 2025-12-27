@@ -474,7 +474,7 @@ class TestTextToTextNodes(unittest.TestCase):
         with self.assertRaises(ValueError):
             text_to_textnodes(text)
 
-    def test_escaped_italics(self):
+    def test_backslash_escapes_italics(self):
         """Backslash escapes italics markers"""
            
         text = r"This is \*not italized\*"

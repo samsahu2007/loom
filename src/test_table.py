@@ -214,7 +214,7 @@ class TestTableParsing(unittest.TestCase):
         md = """
 |  A  |
 | --- |
-| b `\|` az |
+| b `\\|` az |
 """
         table = get_table(md)
         tbody = find_child(table, "tbody")

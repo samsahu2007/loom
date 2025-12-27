@@ -1,4 +1,4 @@
-.FF..F....................................................E...FF.FF.....FF...........................................F....F............F.
+.FF..F.....................................................E...FF.FF.....FF...............................F....F............F.
 ======================================================================
 ERROR: test_code_span_with_backtick_inside (test_inline.TestTextToTextNodes.test_code_span_with_backtick_inside)
 Code span containing backtick uses double backticks
@@ -16,7 +16,7 @@ ValueError: Could Not find closing delimiter for TextNode(Use ``code with ` back
 FAIL: test_block_to_block_type_heading (test_block.TestBlockFunctions.test_block_to_block_type_heading)
 ----------------------------------------------------------------------
 Traceback (most recent call last):
-  File "/home/samriddha/Winter_Opensource/static_site_generator/src/test_block.py", line 84, in test_block_to_block_type_heading
+  File "/home/samriddha/Winter_Opensource/static_site_generator/src/test_block.py", line 105, in test_block_to_block_type_heading
     self.assertEqual(block_to_block_type("   # H1"), BlockType.HEADING)
     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 AssertionError: <BlockType.PARAGRAPH: 'PARAGRAPH'> != <BlockType.HEADING: 'HEADING'>
@@ -25,7 +25,7 @@ AssertionError: <BlockType.PARAGRAPH: 'PARAGRAPH'> != <BlockType.HEADING: 'HEADI
 FAIL: test_block_to_block_type_ordered_list (test_block.TestBlockFunctions.test_block_to_block_type_ordered_list)
 ----------------------------------------------------------------------
 Traceback (most recent call last):
-  File "/home/samriddha/Winter_Opensource/static_site_generator/src/test_block.py", line 194, in test_block_to_block_type_ordered_list
+  File "/home/samriddha/Winter_Opensource/static_site_generator/src/test_block.py", line 215, in test_block_to_block_type_ordered_list
     self.assertEqual(
     ~~~~~~~~~~~~~~~~^
         block_to_block_type("1. Item 1\n3. Item 2"), BlockType.ORDERED_LIST
@@ -38,7 +38,7 @@ AssertionError: <BlockType.PARAGRAPH: 'PARAGRAPH'> != <BlockType.ORDERED_LIST: '
 FAIL: test_block_to_block_type_unordered_list (test_block.TestBlockFunctions.test_block_to_block_type_unordered_list)
 ----------------------------------------------------------------------
 Traceback (most recent call last):
-  File "/home/samriddha/Winter_Opensource/static_site_generator/src/test_block.py", line 178, in test_block_to_block_type_unordered_list
+  File "/home/samriddha/Winter_Opensource/static_site_generator/src/test_block.py", line 199, in test_block_to_block_type_unordered_list
     self.assertEqual(
     ~~~~~~~~~~~~~~~~^
         block_to_block_type("-Item"), BlockType.PARAGRAPH
@@ -148,10 +148,10 @@ TextNode(variable, ITALIC, None)
 +  TextNode(name, PLAIN, None)]
 
 ======================================================================
-FAIL: test_table_mismatched_cells_with_alignment (test_table1.TestTableParsing.test_table_mismatched_cells_with_alignment)
+FAIL: test_table_mismatched_cells_with_alignment (test_table.TestTableParsing.test_table_mismatched_cells_with_alignment)
 ----------------------------------------------------------------------
 Traceback (most recent call last):
-  File "/home/samriddha/Winter_Opensource/static_site_generator/src/test_table1.py", line 198, in test_table_mismatched_cells_with_alignment
+  File "/home/samriddha/Winter_Opensource/static_site_generator/src/test_table.py", line 198, in test_table_mismatched_cells_with_alignment
     self.assertEqual(
     ~~~~~~~~~~~~~~~~^
         [text_of(td) for td in element_children(row2)],
@@ -172,10 +172,10 @@ First extra element 3:
 + ['L2', 'C2', 'R2']
 
 ======================================================================
-FAIL: test_table_with_more_body_cells (test_table1.TestTableParsing.test_table_with_more_body_cells)
+FAIL: test_table_with_more_body_cells (test_table.TestTableParsing.test_table_with_more_body_cells)
 ----------------------------------------------------------------------
 Traceback (most recent call last):
-  File "/home/samriddha/Winter_Opensource/static_site_generator/src/test_table1.py", line 176, in test_table_with_more_body_cells
+  File "/home/samriddha/Winter_Opensource/static_site_generator/src/test_table.py", line 176, in test_table_with_more_body_cells
     self.assertEqual(
     ~~~~~~~~~~~~~~~~^
         [[text_of(td) for td in element_children(r)] for r in rows],
@@ -205,6 +205,6 @@ Traceback (most recent call last):
 AssertionError: ValueError not raised
 
 ----------------------------------------------------------------------
-Ran 137 tests in 0.005s
+Ran 126 tests in 0.005s
 
 FAILED (failures=12, errors=1)
