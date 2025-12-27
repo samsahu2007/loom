@@ -200,7 +200,7 @@ class TestTableParsing(unittest.TestCase):
             ["L2", "C2", "R2"],
         )
 
-    def test_header_row_delimeter_row_mismatch(self):
+    def test_header_row_delimiter_row_mismatch(self):
         """The header row must match the delimiter row in the number of cells. If not, a table will not be recognized"""
         md = """
 |  A  |  B  |
@@ -221,15 +221,15 @@ class TestTableParsing(unittest.TestCase):
 
         row = element_children(tbody)[0]
         cells = element_children(row)
-        assert len(cells) == 1
+        self.assertEqual(len(cells), 1)
         td = cells[0]
         children = td.children
 
         # Expect: text, code, text
-        assert children[0].value == "b "
-        assert children[1].tag == "code"
-        assert children[1].children[0].value == "|"
-        assert children[2].value == " az"
+        self.assertEqual(children[0].value, "b ")
+        self.assertEqual(children[1].tag, "code")
+        self.assertEqual(children[1].children[0].value, "|")
+        self.assertEqual(children[2].value, " az")
     
 
 if __name__ == "__main__":

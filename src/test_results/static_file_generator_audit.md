@@ -9,7 +9,7 @@
 
 ## Summary
 
-This report documents the audit findings for the Static File Generator project with respect to unit tests and CommonMark compliance.  
+This report documents the audit findings for the Static File Generator project regarding unit tests and CommonMark compliance.
 The objective of the audit was to:
 
 - Fix incorrect or outdated unit tests
@@ -213,7 +213,7 @@ Based on the failed tests, the following code changes are required:
 - Add **backslash escape handling** for inline formatting
 - Escape double quotes in HTML attribute values (" → &quot;) within props_to_html() to ensure valid HTML output.
 - Support **double-backtick code spans**
-- Ensure GFM compliance with regard to tables
+- Ensure GFM compliance for tables
   - extra cells in `<tbody>` should not be rendered
 - Ensure empty URLs do not raise runtime errors
 
